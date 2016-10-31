@@ -20,64 +20,70 @@ int QueueLength = 5;
 void processRequest(int socket);
 
 int main( int argc, char **argv) {
-	// Print usage
-	if(argc < 2){
-		fprintf( stderr, "%s", usage);
-		exit(-1);
+	// Print usage if not enough arguments
+  	if ( argc < 2 ) {
+  	  fprintf( stderr, "%s", usage );
+  	  exit( -1 );
+  	}
+  
+  	// Get the port from the arguments
+  	int port = atoi( argv[1] );
+  	
+  	// Set the IP address and port for this server
+  	struct sockaddr_in serverIPAddress; 
+  	memset( &serverIPAddress, 0, sizeof(serverIPAddress) );
+  	serverIPAddress.sin_family = AF_INET;
+  	serverIPAddress.sin_addr.s_addr = INADDR_ANY;
+  	serverIPAddress.sin_port = htons((u_short) port);
+  	
+  	// Allocate a socket
+  	int masterSocket =  socket(PF_INET, SOCK_STREAM, 0);
+  	if ( masterSocket < 0) {
+  	  perror("socket");
+  	  exit( -1 );
+  	}
+	
+	// Set socket options to reuse port. Otherwise we will
+	// have to wait about 2 minutes before reusing the sae port number
+	int optval = 1; 
+	int err = setsockopt(masterSocket, SOL_SOCKET, SO_REUSEADDR, 
+			     (char *) &optval, sizeof( int ) );
+	// Bind the socket to the IP address and port
+	int error = bind( masterSocket,
+			  (struct sockaddr *)&serverIPAddress,
+			  sizeof(serverIPAddress) );
+	if ( error ) {
+	  perror("bind");
+	  exit( -1 );
 	}
-
-	// Get port
-	int port = atoi(argv[1]);
-
-	// Set IP addr and port for server
-	struct sockaddr_in serverIPAddress;
-	memset( &serverIPAddress, 0, sizeof(serverIPAddress) );
-	serverIPAddress.sin_family = AF_INET;
-	serverIPAddress.sin_addr.s_addr = INADDR_ANY;
-	serverIPAddress.sin_port = htons((u_short)port);
-
-	// Allocate a socket
-	int masterSocket = socket(PF_INET, SOCK_STREAM, 0);
-	if(masterSocket < 0){
-		perror("socket");
-		exit(-1);
+	 
+	// Put socket in listening mode and set the 
+	// size of the queue of unprocessed connections
+	error = listen( masterSocket, QueueLength);
+	if ( error ) {
+	  perror("listen");
+	  exit( -1 );
 	}
-
-	// Set socket options to reuse port to avoid 
-	// 2 min cooldown
-	int optval = 1;
-	int error = setsockopt(masterSocket, SOL_SOCKET, SO_REUSEADDR, (char *) & optval, sizeof(int));
-	if(error) {
-		perror("bind");
-		exit(-1);
+	
+	while ( 1 ) {
+	
+	  // Accept incoming connections
+	  struct sockaddr_in clientIPAddress;
+	  int alen = sizeof( clientIPAddress );
+	  int slaveSocket = accept( masterSocket,
+				    (struct sockaddr *)&clientIPAddress,
+				    (socklen_t*)&alen);
+	
+	  if ( slaveSocket < 0 ) {
+	    perror( "accept" );
+	    exit( -1 );
+	  }
+	
+	  // Process request.
+	  processRequest( slaveSocket );
+	  // Close socket
+	  close( slaveSocket );
 	}
-
-	// Put socket in listening mode
-	// set size of queue
-	error = listen(masterSocket, QueueLength);
-	if(error){
-		perror("listen");
-		exit(-1);
-	}
-
-	while(1){
-		// Accept incoming connections
-		struct sockaddr_in clientIPAddress;
-		int alen = sizeof(clientIPAddress);
-		int slaveSocket = accept(masterSocket, (struct sockaddr*)&clientIPAddress, (socklen_t*)&alen);
-
-		if(slaveSocket < 0){
-			perror("accept");
-			exit(-1);
-		}
-
-		// Process request
-		processRequest(slaveSocket);
-
-		// Close socket
-		close(slaveSocket);
-	}
-
 }
 
 void processRequest( int fd ){
