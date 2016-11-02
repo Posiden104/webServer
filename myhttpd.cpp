@@ -169,5 +169,7 @@ void processRequest( int fd ){
 	write(fd, buffer, sizeof(buffer));
 
 	fclose(fp);
+
+	sleep(1000);
 	
 }
