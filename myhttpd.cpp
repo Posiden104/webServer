@@ -146,7 +146,7 @@ void processRequest( int fd ){
 	const char * Plain = "text/plain\n";
 	const char * Html = "text/html\n";
 
-	const char * Response = "HTTP/1.0 404 File Not Found\nServer: cs252 lab5\nContent-type: text/plain\n\nCould not find specified URL. The server returned an error\n";
+	const char * Response = "HTTP/1.0 200 File Not Found\nServer: cs252 lab5\nContent-type: text/plain\n\nCould not find specified URL. The server returned an error\n";
 
 	// Send response
 	
