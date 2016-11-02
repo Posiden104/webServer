@@ -94,6 +94,7 @@ void processRequest( int fd ){
 	int n;
 	int crlf = 0;
 	int get = 0;
+	int flag = 0;
 
 	// Current char
 	unsigned char newChar;
@@ -107,7 +108,7 @@ void processRequest( int fd ){
 	// <lf> = 10
 	// or "\n\n"
 	
-	while (fileLen < MaxLen && (n = read(fd, &newChar, sizeof(newChar)) > 0 )) {
+	while (fileLen < MaxLen && (n = read(fd, &newChar, sizeof(newChar)) > 0 ) && !flag) {
 		
 		// If <cr><lf> (in octal)
 		if(lastChar == '\015' && newChar == '\012'){
@@ -115,8 +116,10 @@ void processRequest( int fd ){
 			fileLen--;
 			crlf++;
 
-			// TODO: Handle 2 crlf in a row
-
+			// Handle 2 crlf in a row
+			if(crlf > 1){
+				flag = 1;
+			}
 			break;
 		}
 
@@ -143,12 +146,18 @@ void processRequest( int fd ){
 	const char * Plain = "text/plain\n";
 	const char * Html = "text/html\n";
 
+	const char * Response = "HTTP/1.0 404 File Not Found\nServer: cs252 lab5\nContent-type: text/plain\n\nCould not find specified URL. The server returned an error\n";
+
 	// Send response
 	
+	write(fd, Response, sizeof(Response));
+
+	/*
 	write(fd, Head, sizeof(Head));
 	write(fd, FourOhFour, sizeof(FourOhFour));
 	write(fd, ServCont, sizeof(ServCont));
 	write(fd, Plain, sizeof(Plain));
 	write(fd, StartTransmission, sizeof(StartTransmission));
 	write(fd, ErrMsg, sizeof(ErrMsg));
+	*/
 }
