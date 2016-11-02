@@ -150,14 +150,24 @@ void processRequest( int fd ){
 
 	// Send response
 	
-	write(fd, Response, sizeof(Response));
+	FILE* fp = fopen ("./http-root-dir/htdocs/index.html", "r");
+	char buffer[1024];
+	fgets(buffer, 1024, fp);
 
-	/*
+	//write(fd, Response, sizeof(Response));
+
+	
 	write(fd, Head, sizeof(Head));
-	write(fd, FourOhFour, sizeof(FourOhFour));
+	write(fd, TwoHundo, sizeof(TwoHundo));
 	write(fd, ServCont, sizeof(ServCont));
-	write(fd, Plain, sizeof(Plain));
+	write(fd, Html, sizeof(Html));
 	write(fd, StartTransmission, sizeof(StartTransmission));
-	write(fd, ErrMsg, sizeof(ErrMsg));
-	*/
+
+	//while((c = fgetc(fp)) != EOF){
+//		write(fd, c, sizeof(c));
+//	}
+	write(fd, buffer, sizeof(buffer));
+
+	fclose(fp);
+	
 }
