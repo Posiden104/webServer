@@ -170,6 +170,6 @@ void processRequest( int fd ){
 
 	fclose(fp);
 
-	sleep(1000);
+	sleep(10);
 	
 }
