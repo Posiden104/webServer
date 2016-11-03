@@ -89,11 +89,13 @@ int main( int argc, char **argv) {
 void processRequest( int fd ){
 	// Buffer to store file requested
 	const int MaxLen = 1024;
-	char file[MaxLen +1];
-	int fileLen = 0;
+	char docPath[MaxLen +1];
+	char curString[MaxLen +1];
+	int length = 0;
 	int n;
 	int crlf = 0;
 	int get = 0;
+	int seenDocPath = 0;
 	int flag = 0;
 
 	// Current char
@@ -106,7 +108,37 @@ void processRequest( int fd ){
 	// Looking for GET <Doc Requested> HTTP... <cr><lf><cr><lf>
 	// <cr> = 13
 	// <lf> = 10
-	// or "\n\n"
+	// or "\r\n"
+	
+
+	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
+		length++;
+		if(newChar == ' '){
+			if(!get){
+				get++;
+			} else if(!seenDocPath){
+				curString[length-1] = 0;
+				strcpy(docPath, curString);
+			}
+		} else if(newChar == '\n' && lastChar == '\r'){
+			// <crlf>
+			length--;
+			crlf++;
+			if(crlf > 1){
+				flag = 1;
+			}
+			break;
+		} else {
+			lastChar = newChar;
+			curString[length-1] = newChar;
+		}
+	}
+
+	printf("Requested Document: %s\n", docPath);
+
+	return;
+
+	/*
 	
 	while (fileLen < MaxLen && (n = read(fd, &newChar, sizeof(newChar)) > 0 ) && !flag) {
 		
@@ -171,5 +203,5 @@ void processRequest( int fd ){
 	fclose(fp);
 
 	sleep(10);
-	
+	*/
 }
