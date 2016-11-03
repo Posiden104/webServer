@@ -119,7 +119,11 @@ void processRequest( int fd ){
 				curString[length-1] = 0;
 				strcpy(docPath, curString);
 			}
-		} else*/ if(lastChar == 13 && newChar == 10){
+		} else*/ 
+		
+		printf("Read char: %s\n", n);
+		
+		if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
 			// <crlf>
 			length--;
