@@ -130,6 +130,7 @@ void processRequest( int fd ){
 			}
 			break;
 		} else {
+			crlf = 0;
 			lastChar = newChar;
 			curString[length-1] = newChar;
 		}
