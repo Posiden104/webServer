@@ -113,7 +113,7 @@ void processRequest( int fd ){
 
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
 		length++;
-		if(newChar == ' '){
+		/*if(newChar == ' '){
 			if(get < 2){
 				get++;
 			} else if(!seenDocPath){
@@ -129,9 +129,9 @@ void processRequest( int fd ){
 			}
 			break;
 		} else {
-			lastChar = newChar;
+		*/	lastChar = newChar;
 			curString[length-1] = newChar;
-		}
+	//	}
 	}
 
 	printf("Requested Document: %s\n", docPath);
