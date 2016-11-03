@@ -116,16 +116,14 @@ void processRequest( int fd ){
 	}
 
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
-		/*if(newChar == ' '){
+		if(newChar == ' '){
 			if(get < 2){
 				get++;
 			} else if(!seenDocPath){
 				curString[length-1] = 0;
 				strcpy(docPath, curString);
 			}
-		} else*/ 
-		
-		if(lastChar == 13 && newChar == 10){
+		} else if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
 			// <crlf>
 			length--;
@@ -142,7 +140,8 @@ void processRequest( int fd ){
 		}
 	}
 
-	printf("Requested Document: %s\n", curString);
+	printf("Request: %s\n", curString);
+	printf("Requested Document: %s\n", docPath);
 
 	return;
 
