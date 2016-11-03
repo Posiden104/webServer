@@ -121,8 +121,6 @@ void processRequest( int fd ){
 			}
 		} else*/ 
 		
-		printf("Read char: %s\n", n);
-		
 		if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
 			// <crlf>
