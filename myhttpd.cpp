@@ -122,7 +122,7 @@ void processRequest( int fd ){
 			} else if(!seenDocPath){
 				curString[length] = 0;
 				strcpy(docPath, curString);
-				seenDocPath++;
+				
 			}
 		} else if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
