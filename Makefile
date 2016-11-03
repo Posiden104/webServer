@@ -20,7 +20,7 @@ hello.so: hello.o
 
 %.o: %.cc
 	@echo 'Building $@ from $<'
-	$(CXX) -o $@ -c -I. $<
+	$(CXX) -o $@ -c -I. $< -g
 
 git-commit:
 	git add *.h *.cc >> .local.git.out
