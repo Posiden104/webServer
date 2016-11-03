@@ -112,7 +112,6 @@ void processRequest( int fd ){
 	
 
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
-		length++;
 		/*if(newChar == ' '){
 			if(get < 2){
 				get++;
@@ -132,7 +131,8 @@ void processRequest( int fd ){
 		} else {
 			crlf = 0;
 			lastChar = newChar;
-			curString[length-1] = newChar;
+			curString[length] = newChar;
+			length++;
 		}
 	}
 
