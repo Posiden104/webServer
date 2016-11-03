@@ -114,7 +114,7 @@ void processRequest( int fd ){
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
 		length++;
 		if(newChar == ' '){
-			if(!get){
+			if(get < 2){
 				get++;
 			} else if(!seenDocPath){
 				curString[length-1] = 0;
