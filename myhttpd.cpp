@@ -120,7 +120,7 @@ void processRequest( int fd ){
 				curString[length-1] = 0;
 				strcpy(docPath, curString);
 			}
-		} else if(newChar == '\n' && lastChar == '\r'){
+		} else*/ if(lastChar == '\r' && newChar == '\n'){
 			// <crlf>
 			length--;
 			crlf++;
@@ -129,9 +129,9 @@ void processRequest( int fd ){
 			}
 			break;
 		} else {
-		*/	lastChar = newChar;
+			lastChar = newChar;
 			curString[length-1] = newChar;
-	//	}
+		}
 	}
 
 	printf("Requested Document: %s\n", docPath);
