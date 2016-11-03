@@ -110,6 +110,10 @@ void processRequest( int fd ){
 	// <lf> = 10
 	// or "\r\n"
 	
+	for(int i = 0; i < MaxLen; i++){
+		docPath[i] = 0;
+		curString[i] = 0;
+	}
 
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
 		/*if(newChar == ' '){
