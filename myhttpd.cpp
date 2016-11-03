@@ -121,7 +121,7 @@ void processRequest( int fd ){
 				strcpy(docPath, curString);
 			}
 		} else*/ if(lastChar == '\r' && newChar == '\n'){
-			printf("<crlf>");
+			printf("\n<crlf>\n");
 			// <crlf>
 			length--;
 			crlf++;
