@@ -117,11 +117,12 @@ void processRequest( int fd ){
 
 	while((n = read(fd, &newChar, sizeof(newChar))) > 0 && !flag){
 		if(newChar == ' '){
-			if(get < 2){
+			if(get < 1){
 				get++;
 			} else if(!seenDocPath){
 				curString[length-1] = 0;
 				strcpy(docPath, curString);
+				seenDocPath++;
 			}
 		} else if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
