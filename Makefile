@@ -1,4 +1,4 @@
-CXX = g++ -fPIC -g
+CXX = g++ -fPIC 
 NETLIBS= -lnsl
 
 all: daytime-server daytime-client use-dlopen hello.so myhttpd git-commit
@@ -10,7 +10,7 @@ daytime-server : daytime-server.o
 	$(CXX) -o $@ $@.o $(NETLIBS)
 
 myhttpd : myhttpd.o
-	$(CXX) -o $@ $@.o $(NETLIBS) 
+	$(CXX) -o $@ $@.o -g $(NETLIBS) 
 
 use-dlopen: use-dlopen.o
 	$(CXX) -o $@ $@.o $(NETLIBS) -ldl
