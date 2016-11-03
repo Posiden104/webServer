@@ -133,7 +133,7 @@ void processRequest( int fd ){
 				flag = 1;
 			}
 			break;
-		} else {
+		} else if(get) {
 			crlf = 0;
 			lastChar = newChar;
 			curString[length] = newChar;
