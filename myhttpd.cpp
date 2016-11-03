@@ -127,7 +127,7 @@ void processRequest( int fd ){
 		} else if(lastChar == 13 && newChar == 10){
 			printf("<crlf>\n");
 			// <crlf>
-			length--;
+			//length--;
 			crlf++;
 			if(crlf > 1){
 				flag = 1;
