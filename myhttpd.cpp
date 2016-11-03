@@ -138,7 +138,7 @@ void processRequest( int fd ){
 		}
 	}
 
-	printf("Requested Document: %s\n", docPath);
+	printf("Requested Document: %s\n", curString);
 
 	return;
 
