@@ -87,12 +87,12 @@ int main( int argc, char **argv) {
 	}
 }
 
-void fourOhFour(int fd, const char * errMsg){
+void fourOhFour(int fd, char * errMsg){
 	const char * fof = "HTTP/1.0 404FileNotFound \r\n"
 					   "Server: CS 252 lab5\r\n"
 					   "Content-type: text/plain\r\n\r\n";
 	write(fd, fof, sizeof(fof));
-//	write(fd, errMsg, sizeof(errMsg));
+	write(fd, errMsg, sizeof(errMsg));
 	return;
 }
 
@@ -186,8 +186,7 @@ void processRequest( int fd ){
 
 	// Check if docpath is above /http-root-dir
 	//if(strlen(cwd) < rootLen){
-		const char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
-		printf("%s", errMsg);
+		char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
 		fourOhFour(fd, errMsg);
 	//}
 
