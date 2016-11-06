@@ -87,12 +87,18 @@ int main( int argc, char **argv) {
 	}
 }
 
-void fourOhFour(int fd, char * errMsg){
+void fourOhFour(int fd, int fileNotFound){
 	const char * fof = "HTTP/1.0 404FileNotFound \r\n"
 					   "Server: CS 252 lab5\r\n"
 					   "Content-type: text/plain\r\n\r\n";
+	const char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
+	const char * fnf = "Could not find the specified URL. The server returned an error";
 	write(fd, fof, sizeof(fof));
-	write(fd, errMsg, sizeof(errMsg));
+	if(fileNotFound){
+		write(fd, fnf, sizeof(fnf));
+	} else {
+		write(fd, errMsg, sizeof(errMsg));
+	}
 	return;
 }
 
@@ -186,8 +192,7 @@ void processRequest( int fd ){
 
 	// Check if docpath is above /http-root-dir
 	//if(strlen(cwd) < rootLen){
-		char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
-		fourOhFour(fd, errMsg);
+		fourOhFour(fd, 0);
 	//}
 
 	printf("After fof\n");
