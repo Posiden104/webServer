@@ -96,6 +96,7 @@ void fourOhFour(int fd, int fileNotFound){
 	write(fd, fof, sizeof(fof));
 	if(fileNotFound){
 		write(fd, fnf, sizeof(fnf));
+		printf("after fnf\n");
 	} else {
 		write(fd, errMsg, sizeof(errMsg));
 	}
