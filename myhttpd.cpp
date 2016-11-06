@@ -159,7 +159,7 @@ void processRequest( int fd ){
 	cwd = getcwd(cwd, 256);
 	
 	// Edit docpath
-	strcat(cwd, "http-root-dir");
+	strcat(cwd, "/http-root-dir");
 	int rootLen = strlen(cwd);
 
 	// if /icons
@@ -177,7 +177,10 @@ void processRequest( int fd ){
 	// else add htdocs
 	else {
 		strcat(cwd, "/htdocs");
+		strcat(cwd, docPath);
 	}
+
+	printf("Final Docpath: %s\n", cwd);
 
 	// Check if docpath is above /http-root-dir
 	//if(strlen(cwd) < rootLen){
