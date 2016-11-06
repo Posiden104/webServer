@@ -113,8 +113,8 @@ void fourOhFour(int fd, int fileNotFound){
 	"<address>CS252 Server at localhost</address>\n"           
 	"</body></html>\r\n\r\n";
 
-	write(fd, m_file_not_found, sizeof(m_file_not_found));
-	printf("after something\n");
+	int tempro = write(fd, m_file_not_found, sizeof(m_file_not_found));
+	printf("after something\n%d\n", tempro);
 
 	return;
 	/*
