@@ -94,6 +94,10 @@ void fourOhFour(int fd, int fileNotFound){
 	const char * errMsg = "Invalid File Path. Do not navigate above root directory";
 	const char * fnf = "Could not find the specified URL. The server returned an error";
 
+	write(fd, "HTTP/1.0", 8);
+	write(fd, " ", 1);
+	write(fd, "404", 3);
+
 	write(fd, fof1, sizeof(fof1));
 	printf("after fof1\n");
 	write(fd, fof2, sizeof(fof2));
