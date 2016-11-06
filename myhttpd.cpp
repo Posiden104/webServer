@@ -172,7 +172,7 @@ void processRequest( int fd ){
 	}
 	//if whole docpath is /
 	else if(!strcmp(docPath, "/")){
-		strcat(cwd, "htdocs/index.html");
+		strcat(cwd, "/htdocs/index.html");
 	}
 	// else add htdocs
 	else {
