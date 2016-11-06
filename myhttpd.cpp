@@ -86,6 +86,14 @@ int main( int argc, char **argv) {
 	}
 }
 
+void fourOhFour(int fd, const char * errMsg){
+	const char * fof = "HTTP/1.0 404 File Not Found \r\n"
+					   "Server: CS 252 lab5\r\n"
+					   "Content-type: text/plain\r\n\r\n";
+	write(fd, fof, sizeof(fof));
+	write(fd, errMsg, sizeof(errMsg));
+}
+
 void processRequest( int fd ){
 	// Buffer to store file requested
 	const int MaxLen = 1024;
@@ -147,22 +155,35 @@ void processRequest( int fd ){
 
 	// Grab correct document path
 	char* cwd = (char*)calloc(256, sizeof(char));
+	//char* tmp = (char*)calloc(256, sizeof(char));
 	cwd = getcwd(cwd, 256);
 	
 	// Edit docpath
+	strcat(cwd, "http-root-dir");
+	int rootLen = strlen(cwd);
+
 	// if /icons
-	
+	if(!strncmp(docPath, "/icons", 6)){
+		strcat(cwd, docPath);
+	}
 	// if /htdocs
-	
-	// if / 
-	
-	// else
-	
+	else if(!strncmp(docPath, "/htdocs", 7)){
+		strcat(cwd, docPath);	
+	}
+	//if whole docpath is /
+	else if(!strcmp(docPath, "/")){
+		strcat(cwd, "htdocs/index.html");
+	}
+	// else add htdocs
+	else {
+		strcat(cwd, "/htdocs");
+	}
 
 	// Check if docpath is above /http-root-dir
-	// check length of cwd and getcwd({0}) + /http-root-dir
-	
-
+	//if(strlen(cwd) < rootLen){
+		const char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
+		fourOhFour(fd, errMsg);
+	//}
 
 
 	return;
