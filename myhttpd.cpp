@@ -99,6 +99,7 @@ void fourOhFour(int fd, int fileNotFound){
 		printf("after fnf\n");
 	} else {
 		write(fd, errMsg, sizeof(errMsg));
+		printf("after errmsg\n");
 	}
 	return;
 }
