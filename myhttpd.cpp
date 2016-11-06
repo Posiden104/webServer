@@ -144,38 +144,31 @@ void processRequest( int fd ){
 	printf("Request: %s\n", curString);
 	printf("Requested Document: %s\n", docPath);
 
+
+	// Grab correct document path
+	char* cwd = (char*)calloc(256, sizeof(char));
+	cwd = getcwd(cwd, 256);
+	
+	// Edit docpath
+	// if /icons
+	
+	// if /htdocs
+	
+	// if / 
+	
+	// else
+	
+
+	// Check if docpath is above /http-root-dir
+	// check length of cwd and getcwd({0}) + /http-root-dir
+	
+
+
+
 	return;
 
 	/*
 	
-	while (fileLen < MaxLen && (n = read(fd, &newChar, sizeof(newChar)) > 0 ) && !flag) {
-		
-		// If <cr><lf> (in octal)
-		if(lastChar == '\015' && newChar == '\012'){
-			// Discard <CR> from feed
-			fileLen--;
-			crlf++;
-
-			// Handle 2 crlf in a row
-			if(crlf > 1){
-				flag = 1;
-			}
-			break;
-		}
-
-		// Previous chars != crlf
-		crlf = 0;
-
-		file[fileLen] = newChar;
-		fileLen++;
-
-		lastChar = newChar;
-	}
-
-	// Add null char at end of string
-	file[fileLen] = 0;
-	printf("Request = %s\n", file);
-
 	// Generate response
 	const char * Head = "HTTP/1.0 ";
 	const char * ServCont = "Server: CS 252 lab5\nContent-type: ";
