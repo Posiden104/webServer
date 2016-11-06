@@ -115,6 +115,9 @@ void fourOhFour(int fd, int fileNotFound){
 
 	int tempro = write(fd, "404", 3);
 	printf("after something\n%d\n", tempro);
+	int tmp2 = write(fd, "404", 3);
+	printf("after something2\n%d\n", tmp2);
+
 
 	return;
 	/*
