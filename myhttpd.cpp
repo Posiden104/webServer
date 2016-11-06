@@ -88,10 +88,10 @@ int main( int argc, char **argv) {
 }
 
 void fourOhFour(int fd, int fileNotFound){
-	const char * fof = "HTTP/1.0 404FileNotFound \r\n"
-					   "Server: CS 252 lab5\r\n"
-					   "Content-type: text/plain\r\n\r\n";
-	const char * errMsg = "Invalid File Path. Do not navigate above root directory.\r\n";
+	const char * fof = "HTTP/1.0 404FileNotFound \n"
+					   "Server: CS 252 lab5\n"
+					   "Content-type: text/plain\n\n";
+	const char * errMsg = "Invalid File Path. Do not navigate above root directory";
 	const char * fnf = "Could not find the specified URL. The server returned an error";
 	write(fd, fof, sizeof(fof));
 	if(fileNotFound){
@@ -142,7 +142,7 @@ void processRequest( int fd ){
 				
 			}
 		} else if(lastChar == 13 && newChar == 10){
-			printf("<crlf>\n");
+			//printf("<crlf>\n");
 			// <crlf>
 			length--;
 			crlf++;
@@ -158,7 +158,7 @@ void processRequest( int fd ){
 		}
 	}
 
-	printf("Request: %s\n", curString);
+	//printf("Request: %s\n", curString);
 	printf("Requested Document: %s\n", docPath);
 
 
