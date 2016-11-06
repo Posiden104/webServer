@@ -94,6 +94,31 @@ void fourOhFour(int fd, int fileNotFound){
 	const char * errMsg = "Invalid File Path. Do not navigate above root directory";
 	const char * fnf = "Could not find the specified URL. The server returned an error";
 
+	const char * m_file_not_found =   
+	"HTTP/1.1 404 NOT FOUND\n"            
+	"Server: myhttpd\n"                   
+	"Content-Length: 270\n"               
+	"Connection: close\n"                 
+	"Content-Type: text/html; charset=iso-8859-1\n"            
+	"\n"             
+	"<DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n"   
+	"<html><head>\n" 
+	"<title>404 File Not Found!</title>\n"
+	"</head><body>\n"
+	"<h1>File Not Found</h1>\n"           
+	"<p>The file you requested cannot be found on the server.<\
+	br />\n"         
+	"</p>\n"         
+	"<hr>\n"         
+	"<address>CS252 Server at localhost</address>\n"           
+	"</body></html>\r\n\r\n";
+
+	write(fd, m_file_not_found, sizeof(m_file_not_found));
+	printf("after something\n");
+
+	return;
+	/*
+
 	write(fd, "HTTP/1.0", 8);
 	write(fd, " ", 1);
 	printf("after something\n");
@@ -115,6 +140,8 @@ void fourOhFour(int fd, int fileNotFound){
 		printf("after errmsg\n");
 	}
 	return;
+	printf("after something\n");
+	*/
 }
 
 void processRequest( int fd ){
