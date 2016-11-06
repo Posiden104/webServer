@@ -94,7 +94,7 @@ void fourOhFour(int fd, const char * errMsg){
 	write(fd, fof, sizeof(fof));
 	//write(fd, "\r\n", 2);
 	printf("after write\n");
-	write(fd, errMsg, sizeof(errMsg));
+//	write(fd, errMsg, sizeof(errMsg));
 	return;
 }
 
