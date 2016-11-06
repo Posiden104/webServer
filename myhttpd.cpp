@@ -88,7 +88,7 @@ int main( int argc, char **argv) {
 }
 
 void fourOhFour(int fd, const char * errMsg){
-	const char * fof = "HTTP/1.0 404 File Not Found \r\n"
+	const char * fof = "HTTP/1.0 404FileNotFound \r\n"
 					   "Server: CS 252 lab5\r\n"
 					   "Content-type: text/plain\r\n";
 	write(fd, fof, sizeof(fof));
