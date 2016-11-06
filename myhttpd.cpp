@@ -95,9 +95,9 @@ void fourOhFour(int fd, int fileNotFound){
 	const char * fnf = "Could not find the specified URL. The server returned an error";
 
 	write(fd, "HTTP/1.0", 8);
+	printf("after something\n");
 	write(fd, " ", 1);
 	write(fd, "404", 3);
-	printf("after something\n");
 
 	write(fd, fof1, sizeof(fof1));
 	printf("after fof1\n");
