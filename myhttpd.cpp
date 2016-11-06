@@ -92,8 +92,8 @@ void fourOhFour(int fd, const char * errMsg){
 					   "Server: CS 252 lab5\r\n"
 					   "Content-type: text/plain\r\n\r\n";
 	write(fd, fof, sizeof(fof));
-	printf("after write\n");
 	write(fd, errMsg, sizeof(errMsg));
+	printf("after write\n");
 	return;
 }
 
