@@ -88,10 +88,10 @@ int main( int argc, char **argv) {
 }
 
 void fourOhFour(int fd, const char * errMsg){
-	printf("before right\n");
 	const char * fof = "HTTP/1.0 404 File Not Found \r\n"
 					   "Server: CS 252 lab5\r\n"
 					   "Content-type: text/plain\r\n\r\n";
+	printf("after char\n");
 	write(fd, fof, sizeof(fof));
 	write(fd, errMsg, sizeof(errMsg));
 	return;
