@@ -192,7 +192,7 @@ void processRequest( int fd ){
 
 	// Check if docpath is above /http-root-dir
 	//if(strlen(cwd) < rootLen){
-		fourOhFour(fd, 0);
+		fourOhFour(fd, 1);
 	//}
 
 	printf("After fof\n");
