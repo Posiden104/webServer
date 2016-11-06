@@ -92,6 +92,7 @@ void fourOhFour(int fd, const char * errMsg){
 					   "Content-type: text/plain\r\n\r\n";
 	write(fd, fof, sizeof(fof));
 	write(fd, errMsg, sizeof(errMsg));
+	return;
 }
 
 void processRequest( int fd ){
