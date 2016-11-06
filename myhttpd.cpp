@@ -190,7 +190,7 @@ void processRequest( int fd ){
 		fourOhFour(fd, errMsg);
 	//}
 
-
+	printf("After fof\n");
 	return;
 
 	/*
