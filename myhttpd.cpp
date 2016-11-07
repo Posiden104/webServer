@@ -144,7 +144,7 @@ void fourOhFour(int fd, int fileNotFound){
 		write(fd, errMsg, strlen(errMsg));
 		printf("after errmsg\n");
 	}
-	return;
+//	return;
 	printf("after something\n");
 //	*/
 }
@@ -243,7 +243,7 @@ void processRequest( int fd ){
 	//}
 
 	printf("After fof\n");
-	return;
+//	return;
 
 	/*
 	
@@ -268,16 +268,16 @@ void processRequest( int fd ){
 	//write(fd, Response, sizeof(Response));
 
 	
-	write(fd, Head, sizeof(Head));
-	write(fd, TwoHundo, sizeof(TwoHundo));
-	write(fd, ServCont, sizeof(ServCont));
-	write(fd, Html, sizeof(Html));
-	write(fd, StartTransmission, sizeof(StartTransmission));
+	write(fd, Head, strlen(Head));
+	write(fd, TwoHundo, strlen(TwoHundo));
+	write(fd, ServCont, strlen(ServCont));
+	write(fd, Html, strlen(Html));
+	write(fd, StartTransmission, strlen(StartTransmission));
 
 	//while((c = fgetc(fp)) != EOF){
-//		write(fd, c, sizeof(c));
+//		write(fd, c, strlen(c));
 //	}
-	write(fd, buffer, sizeof(buffer));
+	write(fd, buffer, strlen(buffer));
 
 	fclose(fp);
 
