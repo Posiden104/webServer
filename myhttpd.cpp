@@ -115,7 +115,7 @@ void fourOhFour(int fd, int fileNotFound){
 
 
 
-	int tempro = write(fd, m_file_not_found, sizeof(m_file_not_found));
+	int tempro = write(fd, m_file_not_found, strlen(m_file_not_found));
 	printf("after something\n%d\n", tempro);
 
 	return;
