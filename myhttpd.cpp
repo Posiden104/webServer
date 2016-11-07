@@ -129,8 +129,8 @@ void fourOhFour(int fd, int fileNotFound){
 	write(fd, "404", 3);
 */
 
-	write(fd, fof1, strlen(fof1));
-	printf("after fof1\n");
+	int t = write(fd, fof1, strlen(fof1));
+	printf("after fof1: %d\n", t);
 	write(fd, fof2, strlen(fof2));
 	printf("after fof2\n");
 	write(fd, fof3, strlen(fof3));
