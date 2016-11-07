@@ -115,12 +115,12 @@ void fourOhFour(int fd, int fileNotFound){
 
 
 
-	int tempro = write(fd, m_file_not_found, strlen(m_file_not_found));
-	printf("after something\n%d\n", tempro);
+	//int tempro = write(fd, m_file_not_found, strlen(m_file_not_found));
+	//printf("after something\n%d\n", tempro);
 
-	return;
+	//return;
 
-	/*
+	///*
 	write(fd, "HTTP/1.0", 8);
 	write(fd, " ", 1);
 	printf("after something\n");
@@ -143,7 +143,7 @@ void fourOhFour(int fd, int fileNotFound){
 	}
 	return;
 	printf("after something\n");
-	*/
+//	*/
 }
 
 void processRequest( int fd ){
