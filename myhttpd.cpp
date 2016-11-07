@@ -120,11 +120,14 @@ void fourOhFour(int fd, int fileNotFound){
 
 	//return;
 
-	///*
-	write(fd, "HTTP/1.0", 8);
-	write(fd, " ", 1);
+	/*
+	int t = write(fd, "HTTP/1.0", 8);
+	printf("after 1: %d\n", t);
+	t = write(fd, " ", 1);
+	printf("after2: %d\n", t);
 	printf("after something\n");
 	write(fd, "404", 3);
+*/
 
 	write(fd, fof1, strlen(fof1));
 	printf("after fof1\n");
