@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <signal.h>
 
 const char* usage =
 "																	\n"
@@ -25,6 +26,8 @@ int main( int argc, char **argv) {
   	  fprintf( stderr, "%s", usage );
   	  exit( -1 );
   	}
+
+	signal(SIGPIPE, SIG_IGN);
   
   	// Get the port from the arguments
   	int port = atoi( argv[1] );
