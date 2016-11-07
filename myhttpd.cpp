@@ -126,19 +126,19 @@ void fourOhFour(int fd, int fileNotFound){
 	printf("after something\n");
 	write(fd, "404", 3);
 
-	write(fd, fof1, sizeof(fof1));
+	write(fd, fof1, strlen(fof1));
 	printf("after fof1\n");
-	write(fd, fof2, sizeof(fof2));
+	write(fd, fof2, strlen(fof2));
 	printf("after fof2\n");
-	write(fd, fof3, sizeof(fof3));
+	write(fd, fof3, strlen(fof3));
 	printf("after fof3\n");
 	
 
 	if(fileNotFound){
-		write(fd, fnf, sizeof(fnf));
+		write(fd, fnf, strlen(fnf));
 		printf("after fnf\n");
 	} else {
-		write(fd, errMsg, sizeof(errMsg));
+		write(fd, errMsg, strlen(errMsg));
 		printf("after errmsg\n");
 	}
 	return;
