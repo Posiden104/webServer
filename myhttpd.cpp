@@ -85,6 +85,7 @@ int main( int argc, char **argv) {
 	  // Process request.
 	  processRequest( slaveSocket );
 	  // Close socket
+	  sleep(5);
 	  close( slaveSocket );
 	  printf("socket closed\n");
 	}
