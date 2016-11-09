@@ -32,7 +32,7 @@ int main( int argc, char **argv) {
 	int port = 1025;
 	
 	printf("first char of first arg: ");
-	printf("%c\n", (char)(*argv[1] + 1));
+	printf("%d\n", *argv[1] + 1);
 
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
