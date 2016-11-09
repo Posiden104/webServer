@@ -43,7 +43,7 @@ int main( int argc, char **argv) {
 	}
 
 	if(port < 1024 || port > 65536){
-		fprintf(stderr, "%d", usage);
+		fprintf(stderr, "%s", usage);
 	}
 
 	printf("first char of first arg: %s", *argv[1]);
