@@ -37,7 +37,7 @@ int main( int argc, char **argv) {
 	  fprintf(stderr, "Using port 1025\n");
   	} else if(argc == 2) {
 		// Get the port from the arguments
-		port = atoi( argv[1] );
+		//port = atoi( argv[1] );
 	} else if(argc == 3) {
 		
 	}
