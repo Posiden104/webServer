@@ -31,7 +31,9 @@ void processRequest(int socket);
 int main( int argc, char **argv) {
 	int port = 1025;
 	
-	printf("first char of first arg: %s", argv[1]);
+	printf("first char of first arg: ");
+	printf("%d\n", *argv[1]);
+
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
   	  //fprintf( stderr, "%s", usage );
