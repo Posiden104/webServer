@@ -46,7 +46,7 @@ int main( int argc, char **argv) {
 		fprintf(stderr, "%s", usage);
 	}
 
-	printf("first char of first arg: %s", *argv[1]);
+	printf("first char of first arg: %d", *argv[1]);
 
 	signal(SIGPIPE, SIG_IGN);
   
