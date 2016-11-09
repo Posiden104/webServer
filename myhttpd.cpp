@@ -93,7 +93,8 @@ int main( int argc, char **argv) {
 void fourOhFour(int fd, int fileNotFound){
 	const char * fof1 = "HTTP/1.0 404FileNotFound\n";
 	const char * fof2 = "Server: CS 252 lab5\n";
-	const char * fof3 = "Content-type: text/html\n\n";
+	const char * fof3 = "Content-type: text/html\n";
+	const char * fof4 = "Content-Length: ";
 	const char * errMsg = "Invalid File Path. Do not navigate above root directory";
 	const char * fnf = "Could not find the specified URL. The server returned an error";
 
@@ -120,11 +121,14 @@ void fourOhFour(int fd, int fileNotFound){
 	write(fd, fof1, strlen(fof1));
 	write(fd, fof2, strlen(fof2));
 	write(fd, fof3, strlen(fof3));
-	
+	write(fd, fof4, strlen(fof4));	
 
 	if(fileNotFound){
+		write(fd, "62\n" , 4);
+		write(fd, "\n", 2);
 		write(fd, fnf, strlen(fnf));
 	} else {
+		write(fd, "55\n", 4);
 		write(fd, errMsg, strlen(errMsg));
 	}
 	return;
