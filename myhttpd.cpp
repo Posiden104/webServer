@@ -85,7 +85,6 @@ int main( int argc, char **argv) {
 	  // Process request.
 	  processRequest( slaveSocket );
 	  // Close socket
-	  sleep(5);
 	  close( slaveSocket );
 	  printf("socket closed\n");
 	}
@@ -132,6 +131,7 @@ void fourOhFour(int fd, int fileNotFound){
 		write(fd, "55\n", 4);
 		write(fd, errMsg, strlen(errMsg));
 	}
+	sleep(2);
 	return;
 }
 
