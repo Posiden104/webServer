@@ -44,6 +44,7 @@ int main( int argc, char **argv) {
 
 	if(port < 1024 || port > 65536){
 		fprintf(stderr, "%s", usage);
+		exit(-1);
 	}
 
 	printf("first char of first arg: %d", *argv[1]);
