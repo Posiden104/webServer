@@ -128,8 +128,7 @@ void fourOhFour(int fd, int fileNotFound){
 	const char * m_file_not_found3 = "<title>404 Navigated Too High!</title>\n"
 	"</head><body>\n"
 	"<h1>File Navigation Error</h1>\n"           
-	"<p>The file you requested cannot be found on the server. Please do not navigate above the root directory.<\
-	br />\n"         
+	"<p>The file you requested cannot be found on the server. Please do not navigate above the root directory.<br />\n"         
 	"</p>\n"         
 	"<hr>\n"         
 	"<address>CS252 Server at localhost</address>\n"           
