@@ -9,6 +9,9 @@
 #include <signal.h>
 #include <iostream>
 #include <fstream>
+#include <fcntl.h>
+#include <sys/sendfile.h>
+#include <sys/stat.h>
 
 
 using namespace std;
@@ -233,59 +236,38 @@ void processRequest( int fd ){
 		fourOhFour(fd, 0);
 	}
 
-	// write document
-	ifstream file (cwd);
-
-	if(file.is_open()){
-		//char * line = (char*)calloc(256, sizeof(char));
-		string line;
-		while(getline(file, line)){
-			cout << line << '\n';
-		}
-		file.close();
-	} else {
-		fourOhFour(fd, 1);
-	}
-
-
-
-
-
-	/*
 	// Generate response
 	const char * Head = "HTTP/1.0 ";
-	const char * ServCont = "Server: CS 252 lab5\nContent-type: ";
 	const char * TwoHundo = "200 Document follows \n";
-	const char * FourOhFour = "404 File Not Found\n";
+	const char * ServCont = "Server: CS 252 lab5\nContent-type: ";
+	//const char * FourOhFour = "404 File Not Found\n";
 	const char * StartTransmission = "\n";
-	const char * ErrMsg = "Could not find the specified URL. The server returned an error.";
+	//const char * ErrMsg = "Could not find the specified URL. The server returned an error.";
 	const char * Plain = "text/plain\n";
 	const char * Html = "text/html\n";
 
-	const char * Response = "HTTP/1.0 200 File Not Found\nServer: cs252 lab5\nContent-type: text/plain\n\nCould not find specified URL. The server returned an error\n";
+	// open document
+	//ifstream file (cwd);
+	int file = open(cwd, O_RDONLY);
 
-	// Send response
-	
-	FILE* fp = fopen ("./http-root-dir/htdocs/index.html", "r");
-	char buffer[1024];
-	fgets(buffer, 1024, fp);
+	if(file/*file.is_open()*/){
+		// write protocol
+		write(fd, Head, strlen(Head));
+		write(fd, TwoHundo, strlen(TwoHundo));
+		write(fd, ServCont, strlen(ServCont));
+		write(fd, Html, strlen(Html));
+		write(fd, StartTransmission, strlen(StartTransmission));
+		
+		// send the file
+		struct stat stat_buff;
+		fstat(file, &stat_buff);
 
-	//write(fd, Response, sizeof(Response));
+		int rc = sendfile(fd, file, 0, stat_buff.st_size);
 
-	
-	write(fd, Head, strlen(Head));
-	write(fd, TwoHundo, strlen(TwoHundo));
-	write(fd, ServCont, strlen(ServCont));
-	write(fd, Html, strlen(Html));
-	write(fd, StartTransmission, strlen(StartTransmission));
-
-	//while((c = fgetc(fp)) != EOF){
-//		write(fd, c, strlen(c));
-//	}
-	write(fd, buffer, strlen(buffer));
-
-	fclose(fp);
-
-	sleep(10);
-	*/
+		//file.close();
+		close(file);
+	} else {
+		// File Not Found
+		fourOhFour(fd, 1);
+	}
 }
