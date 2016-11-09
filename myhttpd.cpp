@@ -263,6 +263,8 @@ void processRequest( int fd ){
 		fstat(file, &stat_buff);
 
 		int rc = sendfile(fd, file, 0, stat_buff.st_size);
+	
+		write(fd, "\n\n", 2);
 
 		//file.close();
 		close(file);
