@@ -32,15 +32,15 @@ int main( int argc, char **argv) {
 	int port = 1025;
 	
 	printf("first char of first arg: ");
-	printf("%d\n", *argv[1]);
+	printf("%c\n", (char)(*argv[1] + 1));
 
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
   	  //fprintf( stderr, "%s", usage );
 	  fprintf(stderr, "Using port 1025\n");
-  	} else if(argc == 2) {
+  	} else if(argc == 2 && *argv[1] != 45) {
 		// Get the port from the arguments
-		//port = atoi( argv[1] );
+		port = atoi( argv[1] );
 	} else if(argc == 3) {
 		
 	}
