@@ -117,39 +117,17 @@ void fourOhFour(int fd, int fileNotFound){
 	"</body></html>\r\n\r\n";
 
 
-
-	//int tempro = write(fd, m_file_not_found, strlen(m_file_not_found));
-	//printf("after something\n%d\n", tempro);
-
-	//return;
-
-	/*
-	int t = write(fd, "HTTP/1.0", 8);
-	printf("after 1: %d\n", t);
-	t = write(fd, " ", 1);
-	printf("after2: %d\n", t);
-	printf("after something\n");
-	write(fd, "404", 3);
-*/
-
-	int t = write(fd, fof1, strlen(fof1));
-	printf("after fof1: %d\n", t);
-	t = write(fd, fof2, strlen(fof2));
-	printf("after fof2\n");
+	write(fd, fof1, strlen(fof1));
+	write(fd, fof2, strlen(fof2));
 	write(fd, fof3, strlen(fof3));
-	printf("after fof3\n");
 	
 
 	if(fileNotFound){
 		write(fd, fnf, strlen(fnf));
-		printf("after fnf\n");
 	} else {
 		write(fd, errMsg, strlen(errMsg));
-		printf("after errmsg\n");
 	}
-//	return;
-	printf("after something\n");
-//	*/
+	return;
 }
 
 void processRequest( int fd ){
