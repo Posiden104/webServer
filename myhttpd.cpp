@@ -29,17 +29,27 @@ int QueueLength = 5;
 void processRequest(int socket);
 
 int main( int argc, char **argv) {
+	int port = 1025;
+	
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
-  	  fprintf( stderr, "%s", usage );
-  	  exit( -1 );
-  	}
+  	  //fprintf( stderr, "%s", usage );
+	  fprintf(stderr, "Using port 1025\n");
+  	} else if(argc == 2) {
+		// Get the port from the arguments
+		port = atoi( argv[1] );
+	} else if(argc == 3) {
+		
+	}
+
+	if(port < 1024 || port > 65536){
+		fprintf(stderr, "%s", usage);
+	}
+
+	printf("first char of first arg: %s", *argv[1]);
 
 	signal(SIGPIPE, SIG_IGN);
   
-  	// Get the port from the arguments
-  	int port = atoi( argv[1] );
-  	
   	// Set the IP address and port for this server
   	struct sockaddr_in serverIPAddress; 
   	memset( &serverIPAddress, 0, sizeof(serverIPAddress) );
@@ -100,41 +110,14 @@ int main( int argc, char **argv) {
 }
 
 void fourOhFour(int fd, int fileNotFound){
-	const char * fof1 = "HTTP/1.0 404FileNotFound\n";
+/*	
+ 	const char * fof1 = "HTTP/1.0 404FileNotFound\n";
 	const char * fof2 = "Server: CS 252 lab5\n";
 	const char * fof3 = "Content-type: text/html\n";
 	const char * fof4 = "Content-Length: ";
 	const char * errMsg = "Invalid File Path. Do not navigate above root directory";
 	const char * fnf = "Could not find the specified URL. The server returned an error";
-
-	const char * m_file_not_found =   
-	"HTTP/1.1 404 NOT FOUND\n"            
-	"Server: myhttpd\n"                   
-	"Content-Length: 270\n"               
-	"Connection: close\n"                 
-	"Content-Type: text/html; charset=iso-8859-1\n"            
-	"\n"             
-	"<DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n"   
-	"<html><head>\n"; 
-	const char * m_file_not_found2 = "<title>404 File Not Found!</title>\n"
-	"</head><body>\n"
-	"<h1>File Not Found</h1>\n"           
-	"<p>The file you requested cannot be found on the server.<br />\n"         
-	"</p>\n"         
-	"<hr>\n"         
-	"<address>CS252 Server at localhost</address>\n"           
-	"</body></html>\r\n\r\n";
-	const char * m_file_not_found3 = "<title>404 Navigated Too High!</title>\n"
-	"</head><body>\n"
-	"<h1>File Navigation Error</h1>\n"           
-	"<p>The file you requested cannot be found on the server. Please do not navigate above the root directory.<br />\n"         
-	"</p>\n"         
-	"<hr>\n"         
-	"<address>CS252 Server at localhost</address>\n"           
-	"</body></html>\r\n\r\n";
-
-
-/*
+	
 	write(fd, fof1, strlen(fof1));
 	write(fd, fof2, strlen(fof2));
 	write(fd, fof3, strlen(fof3));
@@ -150,6 +133,36 @@ void fourOhFour(int fd, int fileNotFound){
 	}
 	sleep(2);
 */
+
+	const char * m_file_not_found =   
+		"HTTP/1.1 404 NOT FOUND\n"            
+		"Server: myhttpd\n"                   
+		"Content-Length: 270\n"               
+		"Connection: close\n"                 
+		"Content-Type: text/html; charset=iso-8859-1\n"            
+		"\n"             
+		"<DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n"   
+		"<html><head>\n"; 
+	const char * m_file_not_found2 = 
+		"<title>404 File Not Found!</title>\n"
+		"</head><body>\n"
+		"<h1>File Not Found</h1>\n"           
+		"<p>The file you requested cannot be found on the server.<br />\n"         
+		"</p>\n"         
+		"<hr>\n"         
+		"<address>CS252 Server at localhost</address>\n"           
+		"</body></html>\r\n\r\n";
+	const char * m_file_not_found3 = 
+		"<title>404 Navigated Too High!</title>\n"
+		"</head><body>\n"
+		"<h1>File Navigation Error</h1>\n"           
+		"<p>The file you requested cannot be found on the server.  "
+		"Please do not navigate above the root directory.<br />\n"         
+		"</p>\n"         
+		"<hr>\n"         
+		"<address>CS252 Server at localhost</address>\n"           
+		"</body></html>\r\n\r\n";
+
 
 	write(fd, m_file_not_found, strlen(m_file_not_found));
 
