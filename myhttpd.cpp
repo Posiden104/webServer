@@ -43,7 +43,7 @@ int main( int argc, char **argv) {
 	}
 
 	if(port < 1024 || port > 65536){
-		printf("port: %s\n", port);
+		printf("port: %d\n", port);
 		fprintf(stderr, "%s", usage);
 		exit(-1);
 	}
