@@ -115,8 +115,8 @@ void fourOhFour(int fd, int fileNotFound){
 	"Content-Type: text/html; charset=iso-8859-1\n"            
 	"\n"             
 	"<DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n"   
-	"<html><head>\n" 
-	"<title>404 File Not Found!</title>\n"
+	"<html><head>\n"; 
+	const char * m_file_not_found2 = "<title>404 File Not Found!</title>\n"
 	"</head><body>\n"
 	"<h1>File Not Found</h1>\n"           
 	"<p>The file you requested cannot be found on the server.<\
@@ -125,8 +125,18 @@ void fourOhFour(int fd, int fileNotFound){
 	"<hr>\n"         
 	"<address>CS252 Server at localhost</address>\n"           
 	"</body></html>\r\n\r\n";
+	const char * m_file_not_found3 = "<title>404 Navigated Too High!</title>\n"
+	"</head><body>\n"
+	"<h1>File Navigation Error</h1>\n"           
+	"<p>The file you requested cannot be found on the server. Please do not navigate above the root directory.<\
+	br />\n"         
+	"</p>\n"         
+	"<hr>\n"         
+	"<address>CS252 Server at localhost</address>\n"           
+	"</body></html>\r\n\r\n";
 
 
+/*
 	write(fd, fof1, strlen(fof1));
 	write(fd, fof2, strlen(fof2));
 	write(fd, fof3, strlen(fof3));
@@ -141,6 +151,16 @@ void fourOhFour(int fd, int fileNotFound){
 		write(fd, errMsg, strlen(errMsg));
 	}
 	sleep(2);
+*/
+
+	write(fd, m_file_not_found, strlen(m_file_not_found));
+
+	if(fileNotFound){
+		write(fd, m_file_not_found2, strlen(m_file_not_found2));
+	} else {
+		write(fd, m_file_not_found3, strlen(m_file_not_found3));
+	}
+
 	return;
 }
 
