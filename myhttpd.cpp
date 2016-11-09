@@ -7,6 +7,11 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <signal.h>
+#include <iostream>
+#include <fstream>
+
+
+using namespace std;
 
 const char* usage =
 "																	\n"
@@ -224,15 +229,29 @@ void processRequest( int fd ){
 	printf("Final Docpath: %s\n", cwd);
 
 	// Check if docpath is above /http-root-dir
-	//if(strlen(cwd) < rootLen){
-		fourOhFour(fd, 1);
-	//}
+	if(strlen(cwd) < rootLen){
+		fourOhFour(fd, 0);
+	}
 
-	printf("After fof\n");
-//	return;
+	// write document
+	ifstream file (cwd);
+
+	if(file.is_open()){
+		//char * line = (char*)calloc(256, sizeof(char));
+		string line;
+		while(getline(file, line)){
+			cout << line << '\n';
+		}
+		file.close();
+	} else {
+		fourOhFour(fd, 1);
+	}
+
+
+
+
 
 	/*
-	
 	// Generate response
 	const char * Head = "HTTP/1.0 ";
 	const char * ServCont = "Server: CS 252 lab5\nContent-type: ";
