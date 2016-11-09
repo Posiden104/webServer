@@ -119,8 +119,7 @@ void fourOhFour(int fd, int fileNotFound){
 	const char * m_file_not_found2 = "<title>404 File Not Found!</title>\n"
 	"</head><body>\n"
 	"<h1>File Not Found</h1>\n"           
-	"<p>The file you requested cannot be found on the server.<\
-	br />\n"         
+	"<p>The file you requested cannot be found on the server.<br />\n"         
 	"</p>\n"         
 	"<hr>\n"         
 	"<address>CS252 Server at localhost</address>\n"           
