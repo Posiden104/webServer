@@ -30,9 +30,6 @@ void processRequest(int socket);
 
 int main( int argc, char **argv) {
 	int port = 1025;
-	
-	printf("first char of first arg: ");
-	printf("%d\n", *argv[1] + 1);
 
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
@@ -42,7 +39,7 @@ int main( int argc, char **argv) {
 		// Get the port from the arguments
 		port = atoi( argv[1] );
 	} else if(argc == 3) {
-		
+		// using - option and port	
 	}
 
 	if(port < 1024 || port > 65536){
