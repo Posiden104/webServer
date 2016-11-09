@@ -271,7 +271,7 @@ void processRequest( int fd ){
 	//ifstream file (cwd);
 	int file = open(cwd, O_RDONLY);
 
-	if(file/*file.is_open()*/){
+	if(file != -1){
 		// write protocol
 		write(fd, Head, strlen(Head));
 		write(fd, TwoHundo, strlen(TwoHundo));
