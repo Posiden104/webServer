@@ -292,6 +292,7 @@ void processRequest( int fd ){
 	//const char * ErrMsg = "Could not find the specified URL. The server returned an error.";
 	const char * Plain = "text/plain\n";
 	const char * Html = "text/html\n";
+	const char * Gif = "image/gif\n";
 
 	// open document
 	//ifstream file (cwd);
@@ -305,9 +306,12 @@ void processRequest( int fd ){
 
 		// write content type
 		if(endsWith(cwd, ".html")){
-			
+			write(fd, Html, strlen(Html));
+		} else if(endsWith(cwd, ".gif")){
+			write(fd, Gif, strlen(Gif));
+		} else {
+			write(fd, Plain, strlen(Plain));
 		}
-		write(fd, Html, strlen(Html));
 		write(fd, StartTransmission, strlen(StartTransmission));
 		
 		// send the file
