@@ -125,11 +125,10 @@ int main( int argc, char **argv) {
 	
 	if(serverMode > 1){
 		// switch to different method of socket distribution
-		if(serverMode == 1){
+		if(serverMode == 2){
 			// Threads
-			printf("THREADS!!\n");
 			threadAccept(masterSocket);
-		} else if(serverMode == 2){
+		} else if(serverMode == 3){
 			// Thread Pool
 			poolAccept(masterSocket);
 		} else {
