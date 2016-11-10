@@ -175,6 +175,17 @@ void fourOhFour(int fd, int fileNotFound){
 	return;
 }
 
+int endsWith(const char* str, const char* suffix){
+	if(!str || !suffix){
+		return 0;
+	}
+	size_t lenstr = strlen(str);
+	size_t lensuffix = strlen(suffix);
+	if(lensuffix > lenstr)
+		return 0;
+	return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
+}
+
 void processRequest( int fd ){
 	// Buffer to store file requested
 	const int MaxLen = 1024;
@@ -287,6 +298,11 @@ void processRequest( int fd ){
 		write(fd, Head, strlen(Head));
 		write(fd, TwoHundo, strlen(TwoHundo));
 		write(fd, ServCont, strlen(ServCont));
+
+		// write content type
+		if(endsWith(cwd, ".html")){
+			
+		}
 		write(fd, Html, strlen(Html));
 		write(fd, StartTransmission, strlen(StartTransmission));
 		
