@@ -67,8 +67,6 @@ int main( int argc, char **argv) {
 		} else if(!strcmp(argv[1], "-p")){
 			// using thread pool
 			serverMode = 3;
-			fprintf(stderr, "Thread pool not implimented yet\n");
-			exit (-1);
 			printf("You are using a thread pool strategy\n");
 		} else {
 			// invalid
