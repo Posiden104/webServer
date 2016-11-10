@@ -272,7 +272,7 @@ void processRequest( int fd ){
 		strcat(cwd, docPath);
 	}
 
-	if(endsWith, cwd, "/"){
+	if(cwd[strlen(cwd) - 1] == '/'){
 		printf("ended with /");
 		cwd[strlen(cwd) - 1] = 0;
 	}
