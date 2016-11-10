@@ -52,16 +52,19 @@ int main( int argc, char **argv) {
 		if(!strcmp(argv[1], "-f")){
 			// using process
 			serverMode = 1;
+			printf("You are using a forking strategy\n");
 		} else if(!strcmp(argv[1], "-t")){
 			// using threads
 			serverMode = 2;
 			fprintf(stderr, "Threads not implimented yet\n");
 			exit (-1);
+			printf("You are using a thread strategy\n");
 		} else if(!strcmp(argv[1], "-p")){
 			// using thread pool
 			serverMode = 3;
 			fprintf(stderr, "Thread pool not implimented yet\n");
 			exit (-1);
+			printf("You are using a thread pool strategy\n");
 		} else {
 			// invalid
 			port = 0;
@@ -117,7 +120,15 @@ int main( int argc, char **argv) {
 	
 	if(serverMode > 1){
 		// switch to different method of socket distribution
-		exit(-1);
+		if(serverMode == 1){
+			// Threads
+
+		} else if(serverMode == 2){
+			// Thread Pool
+		} else {
+			perror("invalid serverMode");
+			exit(-1);
+		}
 	}
 
 	while ( 1 ) {
