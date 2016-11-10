@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <pthread.h>
+#include <errno.h>
 
 
 using namespace std;
@@ -31,6 +32,8 @@ int serverMode = 0;
 int processes = 0;
 
 void processRequest(int socket);
+void threadAccept(int masterSocket);
+void poolAccept(int masterSocket);
 
 int main( int argc, char **argv) {
 	int port = 1025;
@@ -123,9 +126,10 @@ int main( int argc, char **argv) {
 		// switch to different method of socket distribution
 		if(serverMode == 1){
 			// Threads
-
+			threadAccept(masterSocket);
 		} else if(serverMode == 2){
 			// Thread Pool
+			poolAccept(masterSocket);
 		} else {
 			perror("invalid serverMode");
 			exit(-1);
@@ -141,9 +145,8 @@ int main( int argc, char **argv) {
 				    (struct sockaddr *)&clientIPAddress,
 				    (socklen_t*)&alen);
 	
-	  if ( slaveSocket < 0 ) {
-	    perror( "accept" );
-	    exit( -1 );
+	  if ( slaveSocket == -1 && errno == EINTR ) {
+	    continue;
 	  }
 
 	  if(serverMode){
@@ -177,6 +180,40 @@ int main( int argc, char **argv) {
 		printf("socket closed\n");
 	  }
 	}
+}
+
+void processRequestThread(int socket){
+	// process
+	processRequest(socket);
+
+	// shutdown and close
+	shutdown(socket, SHUT_WR);
+	close(socket);
+}
+
+void threadAccept(int masterSocket){
+	while(1){
+	  // Accept incoming connections
+	  struct sockaddr_in clientIPAddress;
+	  int alen = sizeof( clientIPAddress );
+	  int slaveSocket = accept( masterSocket,
+				    (struct sockaddr *)&clientIPAddress,
+				    (socklen_t*)&alen);
+	
+	  if ( slaveSocket == -1 && errno == EINTR ) {
+	    continue;
+	  }
+	  
+	  pthread_attr_t attr;
+	  pthread_attr_init(&attr);
+
+	  pthread_t slaveThread;
+	  pthread_create(&slaveThread, &attr, (void *(*)(void*))processRequestThread, (void*)slaveSocket);
+	}
+}
+
+void poolAccept(int masterSocket){
+	exit(-1);
 }
 
 void fourOhFour(int fd, int fileNotFound){
