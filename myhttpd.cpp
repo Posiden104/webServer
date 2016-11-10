@@ -13,6 +13,7 @@
 #include <sys/sendfile.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 
 using namespace std;

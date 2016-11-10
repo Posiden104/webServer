@@ -1,4 +1,4 @@
-CXX = g++ -fPIC -g 
+CXX = g++ -fPIC -g -lpthread 
 NETLIBS= -lnsl
 
 all: daytime-server daytime-client use-dlopen hello.so myhttpd git-commit
