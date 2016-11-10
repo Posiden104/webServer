@@ -60,8 +60,8 @@ int main( int argc, char **argv) {
 		} else if(!strcmp(argv[1], "-t")){
 			// using threads
 			serverMode = 2;
-			fprintf(stderr, "Threads not implimented yet\n");
-			exit (-1);
+			//fprintf(stderr, "Threads not implimented yet\n");
+			//exit (-1);
 			printf("You are using a thread strategy\n");
 		} else if(!strcmp(argv[1], "-p")){
 			// using thread pool
