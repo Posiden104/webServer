@@ -204,7 +204,8 @@ void threadAccept(int masterSocket){
 	  if ( slaveSocket == -1 && errno == EINTR ) {
 	    continue;
 	  }
-	  
+
+	  // init thread
 	  pthread_attr_t attr;
 	  pthread_attr_init(&attr);
 
@@ -213,8 +214,38 @@ void threadAccept(int masterSocket){
 	}
 }
 
+void poolSlave(int masterSocket){
+	while(1){
+	  // Accept incoming connections
+	  struct sockaddr_in clientIPAddress;
+	  int alen = sizeof( clientIPAddress );
+	  int slaveSocket = accept( masterSocket,
+				    (struct sockaddr *)&clientIPAddress,
+				    (socklen_t*)&alen);
+	
+	  if ( slaveSocket == -1 && errno == EINTR ) {
+	    continue;
+	  }
+
+	  // process
+	  processRequest(slaveSocket);
+
+	  // shutdown and close
+	  shutdown(slaveSocket, SHUT_WR);
+	  close(slaveSocket);
+	}
+}
+
 void poolAccept(int masterSocket){
-	exit(-1);
+	// init thread
+	pthread_attr_t attr;
+	pthread_attr_init(&attr);
+	
+	// create thread pool
+	pthread_t tid[5];
+	for(int i=0; i < 5; i++){
+		pthread_create(&(tid[i]), &attr, (void*(*)(void*))poolSlave, (void*)masterSocket); 
+	}
 }
 
 void fourOhFour(int fd, int fileNotFound){
