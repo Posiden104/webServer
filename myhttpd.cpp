@@ -46,6 +46,7 @@ int main( int argc, char **argv) {
 		// Get the port from the arguments
 		port = atoi( argv[1] );
 	} else if(argc == 2 || argc == 3) {
+		// find port
 		if(argc == 2){
 			// using - option without port	
 			fprintf(stderr, "Using port 1025\n");
@@ -53,6 +54,8 @@ int main( int argc, char **argv) {
 			// using - option with port
 			port = atoi(argv[2]);
 		}
+
+		// find option
 		if(!strcmp(argv[1], "-f")){
 			// using process
 			serverMode = 1;
