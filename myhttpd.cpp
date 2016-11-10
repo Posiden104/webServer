@@ -273,6 +273,7 @@ void processRequest( int fd ){
 	}
 
 	if(endsWith, cwd, "/"){
+		printf("ended with /");
 		cwd[strlen(cwd) - 1] = 0;
 	}
 
