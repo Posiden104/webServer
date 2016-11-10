@@ -60,8 +60,6 @@ int main( int argc, char **argv) {
 		} else if(!strcmp(argv[1], "-t")){
 			// using threads
 			serverMode = 2;
-			//fprintf(stderr, "Threads not implimented yet\n");
-			//exit (-1);
 			printf("You are using a thread strategy\n");
 		} else if(!strcmp(argv[1], "-p")){
 			// using thread pool
@@ -126,6 +124,7 @@ int main( int argc, char **argv) {
 		// switch to different method of socket distribution
 		if(serverMode == 1){
 			// Threads
+			printf("THREADS!!\n");
 			threadAccept(masterSocket);
 		} else if(serverMode == 2){
 			// Thread Pool
