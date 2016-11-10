@@ -20,11 +20,12 @@ const char* usage =
 "																	\n"
 "Http server:														\n"
 "For correct usage type: \n"
-"	myhttpd <port>			\n"
+"	myhttpd [-f|-t|-p] [<port>]			\n"
 "\n"
 "Where 1024 < port < 65536 \n";
 
 int QueueLength = 5;
+int serverMode = 0;
 
 void processRequest(int socket);
 
@@ -33,13 +34,39 @@ int main( int argc, char **argv) {
 
 	// Print usage if not enough arguments
   	if ( argc < 2 ) {
-  	  //fprintf( stderr, "%s", usage );
-	  fprintf(stderr, "Using port 1025\n");
+		//fprintf( stderr, "%s", usage );
+		fprintf(stderr, "Using port 1025\n");
   	} else if(argc == 2 && *argv[1] != 45) {
 		// Get the port from the arguments
 		port = atoi( argv[1] );
-	} else if(argc == 3) {
-		// using - option and port	
+	} else if(argc == 2 || argc == 3) {
+		if(argc == 2){
+			// using - option without port	
+			fprintf(stderr, "Using port 1025\n");
+		} else {
+			// using - option with port
+			port = atoi(argv[2]);
+		}
+		if(!strcmp(argv[1], "-f")){
+			// using process
+			serverMode = 1;
+		} else if(!strcmp(argv[1], "-t")){
+			// using threads
+			serverMode = 2;
+			fprintf(stderr, "Threads not implimented yet\n");
+			exit (-1);
+		} else if(!strcmp(argv[1], "-p")){
+			// using thread pool
+			serverMode = 3;
+			fprintf(stderr, "Thread pool not implimented yet\n");
+			exit (-1);
+		} else {
+			// invalid
+			port = 0;
+		}
+	} else {
+		// invalid options
+		port = 0;
 	}
 
 	if(port < 1024 || port > 65536){
@@ -86,6 +113,11 @@ int main( int argc, char **argv) {
 	  exit( -1 );
 	}
 	
+	if(serverMode > 1){
+		// switch to different method of socket distribution
+		exit(-1);
+	}
+
 	while ( 1 ) {
 	
 	  // Accept incoming connections
@@ -99,13 +131,25 @@ int main( int argc, char **argv) {
 	    perror( "accept" );
 	    exit( -1 );
 	  }
-	
-	  // Process request.
-	  processRequest( slaveSocket );
-	  // Close socket
-	  shutdown(slaveSocket, SHUT_WR);
-	  close( slaveSocket );
-	//  printf("socket closed\n");
+
+	  if(serverMode){
+		pid_t slave = fork();
+		if(slave < 0){
+			perror("fork");
+		} else if(slave == 0){
+			// child
+			processRequest(slaveSocket);
+			close(slaveSocket);
+			exit(EXIT_SUCCESS);
+		}
+	  } else {	
+		// Process request.
+		processRequest( slaveSocket );
+		// Close socket
+		shutdown(slaveSocket, SHUT_WR);
+		close( slaveSocket );
+		//  printf("socket closed\n");
+	  }
 	}
 }
 
