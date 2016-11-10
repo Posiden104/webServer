@@ -26,6 +26,7 @@ const char* usage =
 
 int QueueLength = 5;
 int serverMode = 0;
+int processes = 0;
 
 void processRequest(int socket);
 
@@ -138,9 +139,11 @@ int main( int argc, char **argv) {
 			perror("fork");
 		} else if(slave == 0){
 			// child
+			processes ++;
 			processRequest(slaveSocket);
 			close(slaveSocket);
-			printf("thread socket closed\n");
+			processes --;
+			printf("thread socket closed. Processes left: %d\n", processes);
 			exit(EXIT_SUCCESS);
 		}
 	  } else {	
