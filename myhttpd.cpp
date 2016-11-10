@@ -105,7 +105,7 @@ int main( int argc, char **argv) {
 	  // Close socket
 	  shutdown(slaveSocket, SHUT_WR);
 	  close( slaveSocket );
-	  printf("socket closed\n");
+	//  printf("socket closed\n");
 	}
 }
 
@@ -270,6 +270,10 @@ void processRequest( int fd ){
 	else {
 		strcat(cwd, "/htdocs");
 		strcat(cwd, docPath);
+	}
+
+	if(endsWith, cwd, "/"){
+		cwd[strlen(cwd) - 1] = 0;
 	}
 
 	printf("Final Docpath: %s\n", cwd);
