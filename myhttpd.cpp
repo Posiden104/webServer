@@ -142,6 +142,9 @@ int main( int argc, char **argv) {
 			// child
 			processes ++;
 			processRequest(slaveSocket);
+
+			// shutdown and close
+			shutdown(slaveSocket, SHUT_WR);
 			close(slaveSocket);
 			processes --;
 			printf("thread socket closed. Processes left: %d\n", processes);
