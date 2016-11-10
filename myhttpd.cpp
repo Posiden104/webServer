@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <sys/sendfile.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 
 using namespace std;
@@ -145,6 +146,12 @@ int main( int argc, char **argv) {
 			processes --;
 			printf("thread socket closed. Processes left: %d\n", processes);
 			exit(EXIT_SUCCESS);
+		} else {
+			// parent
+			if(waitpid(slave, NULL, 0) < 0){
+				perror("failed to collect child processes");
+				exit(-1);
+			}
 		}
 	  } else {	
 		// Process request.
