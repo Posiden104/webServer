@@ -140,6 +140,7 @@ int main( int argc, char **argv) {
 			// child
 			processRequest(slaveSocket);
 			close(slaveSocket);
+			printf("thread socket closed\n");
 			exit(EXIT_SUCCESS);
 		}
 	  } else {	
@@ -148,7 +149,7 @@ int main( int argc, char **argv) {
 		// Close socket
 		shutdown(slaveSocket, SHUT_WR);
 		close( slaveSocket );
-		//  printf("socket closed\n");
+		printf("socket closed\n");
 	  }
 	}
 }
