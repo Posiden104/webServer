@@ -140,43 +140,41 @@ int main( int argc, char **argv) {
 	  // Accept incoming connections
 	  struct sockaddr_in clientIPAddress;
 	  int alen = sizeof( clientIPAddress );
-	  int slaveSocket = accept( masterSocket,
+	  
+	  pid_t slave = 0;
+
+	  // forking mode
+	  if(serverMode){
+		slave = fork();
+	  }
+
+	  if(slave < 0){
+		perror("fork");
+	  } else if(slave == 0){
+		 // child or basic server 
+		 int slaveSocket = accept( masterSocket,
 				    (struct sockaddr *)&clientIPAddress,
 				    (socklen_t*)&alen);
 	
-	  if ( slaveSocket == -1 && errno == EINTR ) {
-	    continue;
-	  }
+		  if ( slaveSocket == -1 && errno == EINTR ) {
+			 continue;
+		  }
 
-	  if(serverMode){
-		pid_t slave = fork();
-		if(slave < 0){
-			perror("fork");
-		} else if(slave == 0){
-			// child
-			processes ++;
-			processRequest(slaveSocket);
+		  processes ++;
+		  processRequest(slaveSocket);
 
-			// shutdown and close
-			shutdown(slaveSocket, SHUT_WR);
-			close(slaveSocket);
-			processes --;
-			printf("thread socket closed. Processes left: %d\n", processes);
-			exit(EXIT_SUCCESS);
-		} else {
-			// parent
-			if(waitpid(slave, NULL, 0) < 0){
-				perror("failed to collect child processes");
-				exit(-1);
-			}
+		  // shutdown and close
+		  shutdown(slaveSocket, SHUT_WR);
+		  close(slaveSocket);
+		  processes --;
+		  printf("thread socket closed. Processes left: %d\n", processes);
+		  exit(EXIT_SUCCESS);
+	  } else {
+		// parent
+		if(waitpid(slave, NULL, 0) < 0){
+			perror("failed to collect child processes");
+			exit(-1);
 		}
-	  } else {	
-		// Process request.
-		processRequest( slaveSocket );
-		// Close socket
-		shutdown(slaveSocket, SHUT_WR);
-		close( slaveSocket );
-		printf("socket closed\n");
 	  }
 	}
 }
